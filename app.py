@@ -18,11 +18,12 @@ model = load_model(model_path)
 st.title("Image Classification with MobileNet")
 st.write("Upload an image for classification")
 
-uploaded_file = st.file_uploader("Choose and image...", type=["jpeg", "jpg", "png"])
 
-data = np.ndarray(shape=(1, 224,224, 3), dtype=np.float32)
+file = st.file_uploader("", type=["jpg", "png"])
+data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
-def prepare_image_and_predict(image_data, model):
+
+def import_and_predict(image_data, model):
     size = (224, 224)
     image = ImageOps.fit(image_data, size, Image.Resampling.LANCZOS)
     image_array = np.asarray(image)
@@ -32,14 +33,14 @@ def prepare_image_and_predict(image_data, model):
     return prediction
 
 if uploaded_file is not None:
-    image = Image.open(uploaded_file)
+    image = Image.open(file)
     st.image(image, caption='Uploaded Image', use_column_width=True)
     st.write("Classifying...")
 
     prediction = prepare_image_and_predict(image, model)
     
     try:
-        class_names = ['Cheetah', 'Lion']
+        class_names = ["Bishop", "King", "Knight", "Pawn", "Queen", "Rook"]
         pred_class = np.argmax(prediction, axis=1)[0]
 
         st.write(f"Image is a {class_names[pred_class]}")
