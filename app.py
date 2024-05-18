@@ -7,7 +7,7 @@ from PIL import Image, ImageOps
 import os
 
 # Load model
-model_path = 'model_test.h5'
+model_path = 'model.h5'
 if not os.path.exists(model_path):
     raise FileNotFoundError(f"Model file not found at {model_path}")
 
@@ -20,10 +20,10 @@ st.write("Upload an image for classification")
 
 uploaded_file = st.file_uploader("Choose and image...", type=["jpeg", "jpg", "png"])
 
-data = np.ndarray(shape=(1, 28,28, 3), dtype=np.float32)
+data = np.ndarray(shape=(1, 224,224, 3), dtype=np.float32)
 
 def prepare_image_and_predict(image_data, model):
-    size = (28, 28)
+    size = (224, 224)
     image = ImageOps.fit(image_data, size, Image.Resampling.LANCZOS)
     image_array = np.asarray(image)
     normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
