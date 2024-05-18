@@ -23,7 +23,7 @@ uploaded_file = st.file_uploader("Choose and image...", type=["jpeg", "jpg", "pn
 data = np.ndarray(shape=(1, 28,28, 3), dtype=np.float32)
 
 def prepare_image_and_predict(image_data, model):
-    size = (128, 128)
+    size = (28, 28)
     image = ImageOps.fit(image_data, size, Image.Resampling.LANCZOS)
     image_array = np.asarray(image)
     normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
